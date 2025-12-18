@@ -16,18 +16,22 @@ export const initDB = async () => {
     await pool.query(`CREATE EXTENSION IF NOT EXISTS "uuid-ossp";`);
 
     /* USERS */
-    await pool.query(`
-      CREATE TABLE IF NOT EXISTS users (
-        id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-        email VARCHAR(255) UNIQUE NOT NULL,
-        passwordhash TEXT NOT NULL,
-        fullname VARCHAR(255),
-        role VARCHAR(50),
-        isactive BOOLEAN DEFAULT true,
-        createdat TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        updatedat TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-      );
-    `);
+   await pool.query(`
+  CREATE TABLE IF NOT EXISTS users (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    email VARCHAR(255) UNIQUE NOT NULL,
+    passwordhash TEXT, -- nullable for Google users
+    fullname VARCHAR(255),
+    role VARCHAR(50) DEFAULT 'user',
+    isactive BOOLEAN DEFAULT true,
+    auth_provider VARCHAR(20) NOT NULL DEFAULT 'local',
+    -- 'local' | 'google'
+    google_id TEXT UNIQUE,
+    createdat TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updatedat TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  );
+`);
+
 
     /* REFRESH TOKEN */
     await pool.query(`
