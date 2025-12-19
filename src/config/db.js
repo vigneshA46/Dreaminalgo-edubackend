@@ -1,5 +1,6 @@
 import pkg from "pg";
 const { Pool } = pkg;
+import bcrypt from 'bcrypt'
 
 
 const pool = new Pool({
@@ -11,6 +12,8 @@ const pool = new Pool({
 });
 
 export const initDB = async () => {
+
+
   try {
     // Enable UUID extension
     await pool.query(`CREATE EXTENSION IF NOT EXISTS "uuid-ossp";`);
