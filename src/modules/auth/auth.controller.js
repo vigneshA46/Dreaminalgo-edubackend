@@ -6,7 +6,7 @@ export const signup = async (req, res) => {
 };
 
 export const login = async (req, res) => {
-  const { accessToken, refreshToken } =
+  const { accessToken, refreshToken ,userid} =
     await authService.loginService(req.body);
 
   res.cookie("refreshToken", refreshToken, {
@@ -15,7 +15,7 @@ export const login = async (req, res) => {
     sameSite: "strict",
   });
 
-  res.json({ accessToken });
+  res.json({ accessToken , userid });
 };
 
 export const verifyEmail = async (req, res) => {

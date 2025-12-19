@@ -7,7 +7,9 @@ import morgan from 'morgan';
 /* 👉 IMPORT ROUTES */
 import authRoutes from './modules/auth/auth.routes.js';
 import authAdmin from './modules/admin-auth/admin.auth.routes.js';
-import adminRoutes from './modules/admin/admin.routes.js'
+import adminRoutes from './modules/admin/admin.routes.js';
+import userRoutes from './modules/users/users.routes.js'
+
 const app = express();
 
 /* Security */
@@ -34,7 +36,8 @@ app.use(cookieParser());
 /* 👉 ROUTES */
 app.use('/api/auth', authRoutes);
 app.use('/api/admin/auth',authAdmin);
-app.use('/api/admin',adminRoutes)
+app.use('/api/admin',adminRoutes);
+app.use('/api/users',userRoutes)
 
 
 /* Health Check */

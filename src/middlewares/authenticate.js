@@ -11,6 +11,8 @@ const authenticate =(req, res, next) => {
       token,
       process.env.JWT_ACCESS_SECRET
     );
+
+    console.log("user" , req.user)
     // attach user/admin info to request
     req.user = {
       id: decoded.id,
@@ -19,8 +21,10 @@ const authenticate =(req, res, next) => {
     };
     next();
   } catch (error) {
+    console.log(req.role)
     return res.status(401).json({ message: 'Invalid or expired token' });
   }
 };
  
 export default authenticate;
+ 

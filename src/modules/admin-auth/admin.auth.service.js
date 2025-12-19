@@ -19,14 +19,14 @@ export const adminLoginService = async (email, password, res) => {
   /* ACCESS TOKEN */
   const accessToken = jwt.sign(
     { id: admin.id, role: admin.role },
-    process.env.JWT_ADMIN_ACCESS_SECRET,
+    process.env.JWT_ACCESS_SECRET,
     { expiresIn: process.env.ADMIN_ACCESS_TOKEN_EXPIRES }
   );
 
   /* REFRESH TOKEN */
   const refreshToken = jwt.sign(
     { id: admin.id },
-    process.env.JWT_ADMIN_REFRESH_SECRET,
+    process.env.JWT_REFRESH_SECRET,
     { expiresIn: process.env.ADMIN_REFRESH_TOKEN_EXPIRES }
   );
 

@@ -45,6 +45,7 @@ export const loginService = async ({ email, password }) => {
 
   const accessToken = signAccessToken({ id: user.id, role: user.role });
   const refreshToken = signRefreshToken({ id: user.id });
+  const userid = user.id;
 
   await pool.query(
     `INSERT INTO refreshtoken (userid, tokenhash, expiresat)
@@ -52,7 +53,7 @@ export const loginService = async ({ email, password }) => {
     [user.id, refreshToken]
   );
 
-  return { accessToken, refreshToken };
+  return { accessToken, refreshToken,userid };
 };
 
 

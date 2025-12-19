@@ -9,6 +9,13 @@ const refreshAdminTokenService = async (refreshToken, res) => {
     refreshToken,
     process.env.JWT_ADMIN_REFRESH_SECRET
   );
+  const adminRes = await pool.query(
+  'SELECT role FROM admins WHERE id=$1',
+  [decoded.id]
+);
+
+const role = adminRes.rows[0].role;
+
 
   const tokenHash = crypto
     .createHash('sha256')
@@ -28,15 +35,19 @@ const refreshAdminTokenService = async (refreshToken, res) => {
     [tokenHash]
   );
 
-  const newAccessToken = jwt.sign(
-    { id: decoded.id, role: 'admin' },
-    process.env.JWT_ADMIN_ACCESS_SECRET,
-    { expiresIn: process.env.ADMIN_ACCESS_TOKEN_EXPIRES }
-  );
+const newAccessToken = jwt.sign(
+  {
+    id: decoded.id,
+    role,
+    type: 'admin'
+  },
+  process.env.JWT_ACCESS_SECRET,
+  { expiresIn: process.env.ADMIN_ACCESS_TOKEN_EXPIRES }
+);
 
   const newRefreshToken = jwt.sign(
     { id: decoded.id },
-    process.env.JWT_ADMIN_REFRESH_SECRET,
+    process.env.JWT_REFRESH_SECRET,
     { expiresIn: process.env.ADMIN_REFRESH_TOKEN_EXPIRES }
   );
 
