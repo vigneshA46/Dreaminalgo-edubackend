@@ -126,12 +126,13 @@ export const initDB = async () => {
     /* ENROLLMENTS */
     await pool.query(`
       CREATE TABLE IF NOT EXISTS enrollments (
-        id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-        userid UUID REFERENCES users(id) ON DELETE CASCADE,
-        courseid UUID REFERENCES courses(id) ON DELETE CASCADE,
-        status VARCHAR(50),
-        enrolledat TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-      );
+      id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+      userid UUID REFERENCES users(id) ON DELETE CASCADE,
+      courseid UUID REFERENCES courses(id) ON DELETE CASCADE,
+      status VARCHAR(50),
+      enrolledat TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      UNIQUE (userid, courseid)
+   );
     `);
 
     /* LESSON PROGRESS */

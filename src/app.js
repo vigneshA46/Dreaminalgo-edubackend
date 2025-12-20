@@ -8,7 +8,12 @@ import morgan from 'morgan';
 import authRoutes from './modules/auth/auth.routes.js';
 import authAdmin from './modules/admin-auth/admin.auth.routes.js';
 import adminRoutes from './modules/admin/admin.routes.js';
-import userRoutes from './modules/users/users.routes.js'
+import userRoutes from './modules/users/users.routes.js';
+import courseRoutes from './modules/courses/course.routes.js';
+import chapterRoutes from './modules/chapters/chapter.routes.js';
+import lessonRoutes from './modules/lessons/lesson.routes.js';
+import enrollmentRoutes from './modules/enrollments/enrollments.routes.js';
+import announcementRoutes from './modules/announcements/announcements.routes.js';
 
 const app = express();
 
@@ -37,7 +42,13 @@ app.use(cookieParser());
 app.use('/api/auth', authRoutes);
 app.use('/api/admin/auth',authAdmin);
 app.use('/api/admin',adminRoutes);
-app.use('/api/users',userRoutes)
+app.use('/api/users',userRoutes);
+app.use('/api/courses',courseRoutes);
+app.use('/api/chapters',chapterRoutes);
+app.use('/api/lessons',lessonRoutes);
+app.use('/api/enrollments',enrollmentRoutes);
+app.use('/api/announcements',announcementRoutes);
+
 
 
 /* Health Check */
