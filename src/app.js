@@ -14,7 +14,11 @@ import chapterRoutes from './modules/chapters/chapter.routes.js';
 import lessonRoutes from './modules/lessons/lesson.routes.js';
 import enrollmentRoutes from './modules/enrollments/enrollments.routes.js';
 import announcementRoutes from './modules/announcements/announcements.routes.js';
+import couponsRoutes from './modules/coupons/coupons.routes.js';
+import paymentRoutes from './modules/payments/payments.routes.js';
+import progressRoutes from './modules/progress/progress.routes.js';
 
+ 
 const app = express();
 
 /* Security */
@@ -48,8 +52,10 @@ app.use('/api/chapters',chapterRoutes);
 app.use('/api/lessons',lessonRoutes);
 app.use('/api/enrollments',enrollmentRoutes);
 app.use('/api/announcements',announcementRoutes);
-
-
+app.use('/api/coupons',couponsRoutes);
+app.use('/api/payments',paymentRoutes);
+app.use('/api/progress',progressRoutes);
+ 
 
 /* Health Check */
 app.get('/health', (req, res) => {
@@ -57,3 +63,4 @@ app.get('/health', (req, res) => {
 });
 
 export default app;
+ 

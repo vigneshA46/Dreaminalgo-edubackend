@@ -52,7 +52,7 @@ router.post(
 router.post(
   '/all',
   authenticate,
-  authorize('Super Admin', 'courseadmin'),
+  authorize('Super Admin'),
   async (req, res) => {
     const courses = await courseService.getAllCourses();
     res.json(courses);
@@ -69,6 +69,17 @@ router.post(
     const { status } = req.body;
     const courses = await courseService.getCoursesByStatus(status);
     res.json(courses);
+  }
+);
+
+router.get(
+  
+  '/:category',
+  authenticate,
+  async (req, res) => {
+    const {category} = req.params;
+    const course = await courseService.getCoursesByCategory(category);
+    res.json(course);
   }
 );
 

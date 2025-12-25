@@ -6,7 +6,12 @@ import * as userService from './users.service.js';
 const router = Router();
 
 /* USER SELF */
-router.get('/me', authenticate, async (req, res) => {
+router.post('/me', authenticate, async (req, res) => {
+const user = await userService.getMe(req.user.id);
+res.json(user);
+});
+
+router.post('/user', authenticate, async (req, res) => {
 const user = await userService.getMe(req.body.id);
 res.json(user);
 });
@@ -30,7 +35,7 @@ async (req, res) => {
 router.get(
 '/:id',
 authenticate,
-authorize('superadmin', 'courseadmin'),
+authorize('Super Admin', 'courseadmin'),
 async (req, res) => {
   const user = await userService.getUserById(req.params.id);
   res.json(user);
@@ -40,7 +45,7 @@ async (req, res) => {
 router.put(
 '/:id',
 authenticate,
-authorize('superadmin', 'courseadmin'),
+authorize('Super Admin', 'courseadmin'),
 async (req, res) => {
   const user = await userService.updateUser(req.params.id, req.body);
   res.json(user);
@@ -50,7 +55,7 @@ async (req, res) => {
 router.delete(
 '/:id',
 authenticate,
-authorize('superadmin'),
+authorize('Super Admin'),
 async (req, res) => {
   await userService.deleteUser(req.params.id);
   res.json({ message: 'User deactivated' });

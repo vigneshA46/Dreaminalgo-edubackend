@@ -169,7 +169,7 @@ export const initDB = async () => {
         code VARCHAR(50) UNIQUE NOT NULL,
         discountpercentage INT,
         type VARCHAR(50),
-        validfron TIMESTAMP,
+        validfrom TIMESTAMP,
         validto TIMESTAMP,
         usagelimit INT,
         usedcount INT DEFAULT 0,

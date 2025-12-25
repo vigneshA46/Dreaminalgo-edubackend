@@ -16,7 +16,7 @@ export const refreshTokenService = async (oldToken) => {
   const tokenRes = await pool.query(
     `
     SELECT * FROM refreshtoken
-    WHERE tokenhash = $1 AND revokedat IS NULL
+    WHERE tokenhash = $1
     `,
     [oldToken]
   );
@@ -55,3 +55,5 @@ export const refreshTokenService = async (oldToken) => {
     refreshToken: newRefreshToken,
   };
 };
+
+

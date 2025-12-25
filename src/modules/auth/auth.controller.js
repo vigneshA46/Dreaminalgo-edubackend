@@ -15,7 +15,13 @@ export const login = async (req, res) => {
     sameSite: "strict",
   });
 
-  res.json({ accessToken , userid });
+    res.cookie("accessToken", accessToken, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "strict",
+  });
+
+  res.json({ userid });
 };
 
 export const verifyEmail = async (req, res) => {

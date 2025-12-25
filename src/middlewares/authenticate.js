@@ -1,30 +1,26 @@
 import jwt from 'jsonwebtoken';
 
-const authenticate =(req, res, next) => {
+const authenticate = (req, res, next) => {
   try {
-    const authHeader = req.headers.authorization;
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    // 🍪 Read access token from cookies
+    const token = req.cookies?.accessToken;
+
+    if (!token) {
       return res.status(401).json({ message: 'Access token missing' });
     }
-    const token = authHeader.split(' ')[1];
-    const decoded = jwt.verify(
-      token,
-      process.env.JWT_ACCESS_SECRET
-    );
 
-    console.log("user" , req.user)
-    // attach user/admin info to request
+    const decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
+
     req.user = {
       id: decoded.id,
       role: decoded.role,
-      type: decoded.type // 'user' or 'admin'
+      type: decoded.type || 'user'
     };
+
     next();
   } catch (error) {
-    console.log(req.role)
     return res.status(401).json({ message: 'Invalid or expired token' });
   }
 };
- 
+
 export default authenticate;
- 
