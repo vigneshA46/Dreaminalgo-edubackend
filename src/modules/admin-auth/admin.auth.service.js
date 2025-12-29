@@ -42,16 +42,16 @@ export const adminLoginService = async (email, password, res) => {
   );
 
   /* COOKIES */
-  res.cookie('admin_access_token', accessToken, {
+  res.cookie('accessToken', accessToken, {
     httpOnly: true,
-    secure: false,
-    sameSite: 'lax',
+    secure: true,
+    sameSite: 'strict',
   });
 
-  res.cookie('admin_refresh_token', refreshToken, {
+  res.cookie('refreshToken', refreshToken, {
     httpOnly: true,
-    secure: false,
-    sameSite: 'lax',
+    secure: true,
+    sameSite: 'strict',
   });
 
   return {
@@ -76,7 +76,30 @@ export const adminLogoutService = async (refreshToken, res) => {
     [tokenHash]
   );
 
-  res.clearCookie('admin_access_token');
-  res.clearCookie('admin_refresh_token');
+  res.clearCookie('accessToken');
+  res.clearCookie('refreshToken');
 };
  
+
+
+export const getCurrentAdminService = async (adminId) => {
+  const { rows } = await pool.query(
+    `
+    SELECT
+      id,
+      email,
+      role,
+      isactive,
+      createdat
+    FROM admins
+    WHERE id = $1 AND isactive = true
+    `,
+    [adminId]
+  );
+
+  if (!rows.length) {
+    throw new Error('Admin not found');
+  }
+
+  return rows[0];
+};

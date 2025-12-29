@@ -217,3 +217,29 @@ export const getCoursesByCategory = async (category) => {
 
   return rows;
 };
+
+
+export const getCoursesByCategoryandStatus = async (category , status) => {
+  const { rows } = await pool.query(
+    `
+    SELECT
+      id,
+      title,
+      shortdescription,
+      tutor,
+      category,
+      price,
+      isfree,
+      status,
+      tumbnai,
+      createdat
+    FROM courses
+    WHERE category = $1
+    AND status = $2
+    ORDER BY createdat DESC
+    `,
+    [category,status]
+  );
+
+  return rows;
+};

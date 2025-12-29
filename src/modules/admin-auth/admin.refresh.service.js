@@ -7,7 +7,7 @@ const refreshAdminTokenService = async (refreshToken, res) => {
 
   const decoded = jwt.verify(
     refreshToken,
-    process.env.JWT_ADMIN_REFRESH_SECRET
+    process.env.JWT_REFRESH_SECRET
   );
   const adminRes = await pool.query(
   'SELECT role FROM admins WHERE id=$1',
@@ -62,14 +62,16 @@ const newAccessToken = jwt.sign(
     [decoded.id, newHash]
   );
 
-  res.cookie('admin_access_token', newAccessToken, {
+  res.cookie('accessToken', newAccessToken, {
     httpOnly: true,
-    sameSite: 'lax',
+     secure: true,
+    sameSite: 'strict',
   });
 
-  res.cookie('admin_refresh_token', newRefreshToken, {
+  res.cookie('refreshToken', newRefreshToken, {
     httpOnly: true,
-    sameSite: 'lax',
+     secure: true,
+    sameSite: 'strict',
   });
 
   return {
