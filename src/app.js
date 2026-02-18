@@ -18,7 +18,7 @@ import couponsRoutes from './modules/coupons/coupons.routes.js';
 import paymentRoutes from './modules/payments/payments.routes.js';
 import progressRoutes from './modules/progress/progress.routes.js';
 
- 
+
 const app = express();
 
 /* Security */
