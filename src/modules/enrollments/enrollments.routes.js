@@ -45,7 +45,7 @@ router.get(
 router.post(
   '/by-course',
   authenticate,
-  authorize('Super Admin', 'courseadmin'),
+  authorize('superadmin', 'courseadmin'),
   async (req, res) => {
     const enrollments = await enrollmentService.getEnrollmentsByCourse(
       req.body.courseid
@@ -58,7 +58,7 @@ router.post(
 router.post(
   '/admin/enroll-user',
   authenticate,
-  authorize('Super Admin', 'courseadmin'),
+  authorize('superadmin', 'courseadmin'),
   async (req, res) => {
     const enrollment = await enrollmentService.adminEnrollUser(
       req.body.userid,
@@ -72,7 +72,7 @@ router.post(
 router.post(
   '/admin/revoke',
   authenticate,
-  authorize('Super Admin'),
+  authorize('superadmin'),
   async (req, res) => {
     await enrollmentService.revokeEnrollment(
       req.body.userid,

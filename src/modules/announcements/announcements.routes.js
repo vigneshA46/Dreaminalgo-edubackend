@@ -13,7 +13,7 @@ const router = Router();
 router.post(
   '/',
   authenticate,
-  authorize('Super Admin', 'courseadmin'),
+  authorize('superadmin', 'courseadmin'),
   async (req, res) => {
     const announcement = await announcementService.createAnnouncement(req.body);
     res.json(announcement);
@@ -24,7 +24,7 @@ router.post(
 router.put(
   '/',
   authenticate,
-  authorize('Super Admin', 'courseadmin'),
+  authorize('superadmin', 'courseadmin'),
   async (req, res) => {
     const announcement = await announcementService.updateAnnouncement(req.body);
     res.json(announcement);
@@ -35,7 +35,7 @@ router.put(
 router.post(
   '/deactivate',
   authenticate,
-  authorize('Super Admin', 'courseadmin'),
+  authorize('superadmin', 'courseadmin'),
   async (req, res) => {
     await announcementService.deactivateAnnouncement(req.body.id);
     res.json({ message: 'Announcement deactivated' });
@@ -46,7 +46,7 @@ router.post(
 router.get(
   '/admin/all',
   authenticate,
-  authorize('Super Admin', 'courseadmin'),
+  authorize('superadmin', 'courseadmin'),
   async (req, res) => {
     const announcements = await announcementService.getAllAnnouncementsAdmin();
     res.json(announcements);
@@ -57,7 +57,7 @@ router.get(
 router.post(
   '/admin/single',
   authenticate,
-  authorize('Super Admin', 'courseadmin'),
+  authorize('superadmin', 'courseadmin'),
   async (req, res) => {
     const announcement = await announcementService.getAnnouncementById(req.body.id);
     res.json(announcement);

@@ -11,7 +11,7 @@ const router = Router();
 router.post(
   '/',
   authenticate,
-  authorize('Super Admin', 'courseadmin'),
+  authorize('superadmin', 'courseadmin'),
   async (req, res) => {
     const coupon = await couponService.createCoupon(req.body, req.user.id);
     res.json(coupon);
@@ -22,7 +22,7 @@ router.post(
 router.put(
   '/:id',
   authenticate,
-  authorize('Super Admin', 'courseadmin'),
+  authorize('auperadmin', 'courseadmin'),
   async (req, res) => {
     const coupon = await couponService.updateCoupon(req.params.id, req.body);
     res.json(coupon);
@@ -33,7 +33,7 @@ router.put(
 router.delete(
   '/:id',
   authenticate,
-  authorize('Super Admin'),
+  authorize('superadmin'),
   async (req, res) => {
     await couponService.disableCoupon(req.params.id);
     res.json({ message: 'Coupon disabled' });
@@ -44,7 +44,7 @@ router.delete(
 router.get(
   '/',
   authenticate,
-  authorize('Super Admin', 'courseadmin'),
+  authorize('superadmin', 'courseadmin'),
   async (req, res) => {
     const coupons = await couponService.getAllCoupons(req.query);
     res.json(coupons);
@@ -55,7 +55,7 @@ router.get(
 router.get(
   '/:id',
   authenticate,
-  authorize('Super Admin', 'courseadmin'),
+  authorize('superadmin', 'courseadmin'),
   async (req, res) => {
     const coupon = await couponService.getCouponById(req.params.id);
     res.json(coupon);
@@ -66,7 +66,7 @@ router.get(
 router.post(
   '/:id/courses',
   authenticate,
-  authorize('Super Admin', 'courseadmin'),
+  authorize('superadmin', 'courseadmin'),
   async (req, res) => {
     await couponService.assignCourses(req.params.id, req.body.courseIds);
     res.json({ message: 'Courses assigned' });
@@ -77,7 +77,7 @@ router.post(
 router.delete(
   '/:id/courses/:courseId',
   authenticate,
-  authorize('Super Admin', 'courseadmin'),
+  authorize('superadmin', 'courseadmin'),
   async (req, res) => {
     await couponService.removeCourse(req.params.id, req.params.courseId);
     res.json({ message: 'Course removed' });
@@ -133,7 +133,7 @@ router.post(
 router.get(
   '/:id/usage',
   authenticate,
-  authorize('Super Admin'),
+  authorize('superadmin'),
   async (req, res) => {
     const report = await couponService.getCouponUsage(req.params.id);
     res.json(report);

@@ -13,7 +13,7 @@ const router = Router();
 router.post(
   '/',
   authenticate,
-  authorize('Super Admin', 'courseadmin'),
+  authorize('superadmin', 'courseadmin'),
   async (req, res) => {
     const lesson = await lessonService.createLesson(req.body);
     res.json(lesson);
@@ -24,7 +24,7 @@ router.post(
 router.put(
   '/',
   authenticate,
-  authorize('Super Admin', 'courseadmin'),
+  authorize('superadmin', 'courseadmin'),
   async (req, res) => {
     const lesson = await lessonService.updateLesson(req.body);
     res.json(lesson);
@@ -35,7 +35,7 @@ router.put(
 router.delete(
   '/',
   authenticate,
-  authorize('Super Admin', 'courseadmin'),
+  authorize('superadmin', 'courseadmin'),
   async (req, res) => {
     await lessonService.deleteLesson(req.body.id);
     res.json({ message: 'Lesson deleted successfully' });
@@ -56,7 +56,7 @@ router.post(
 router.put(
   '/reorder',
   authenticate,
-  authorize('Super Admin', 'courseadmin'),
+  authorize('superadmin', 'courseadmin'),
   async (req, res) => {
     await lessonService.reorderLessons(req.body.chapterid, req.body.lessons);
     res.json({ message: 'Lessons reordered successfully' });

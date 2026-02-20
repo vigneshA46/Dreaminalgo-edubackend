@@ -9,7 +9,7 @@ const router = Router();
 router.post(
   '/',
   authenticate,
-  authorize('Super Admin', 'courseadmin'),
+  authorize('superadmin', 'courseadmin'),
   async (req, res) => {
     const course = await courseService.createCourse(req.body, req.user.id);
     res.json(course);
@@ -20,7 +20,7 @@ router.post(
 router.put(
   '/',
   authenticate,
-  authorize('Super Admin', 'courseadmin'),
+  authorize('superadmin', 'courseadmin'),
   async (req, res) => {
     const course = await courseService.updateCourse(req.body);
     res.json(course);
@@ -31,7 +31,7 @@ router.put(
 router.delete(
   '/',
   authenticate,
-  authorize('Super Admin'),
+  authorize('superadmin'),
   async (req, res) => {
     await courseService.deleteCourse(req.body.id);
     res.json({ message: 'Course deleted successfully' });
@@ -52,7 +52,7 @@ router.post(
 router.post(
   '/all',
   authenticate,
-  authorize('Super Admin'),
+  authorize('superadmin'),
   async (req, res) => {
     const courses = await courseService.getAllCourses();
     res.json(courses);

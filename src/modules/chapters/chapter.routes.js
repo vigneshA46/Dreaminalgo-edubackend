@@ -13,7 +13,7 @@ const router = Router();
 router.post(
   '/',
   authenticate,
-  authorize('Super Admin'),
+  authorize('superadmin'),
   async (req, res) => {
     const chapter = await chapterService.createChapter(req.body);
     res.json(chapter);
@@ -24,7 +24,7 @@ router.post(
 router.put(
   '/',
   authenticate,
-  authorize('Super Admin'),
+  authorize('superadmin'),
   async (req, res) => {
     const chapter = await chapterService.updateChapter(req.body);
     res.json(chapter);
@@ -35,7 +35,7 @@ router.put(
 router.delete(
   '/',
   authenticate,
-  authorize('Super Admin'),
+  authorize('superadmin'),
   async (req, res) => {
     await chapterService.deleteChapter(req.body.id);
     res.json({ message: 'Chapter deleted successfully' });
@@ -56,7 +56,7 @@ router.post(
 router.put(
   '/reorder',
   authenticate,
-  authorize('Super Admin'),
+  authorize('superadmin'),
   async (req, res) => {
     await chapterService.reorderChapters(req.body.courseid, req.body.chapters);
     res.json({ message: 'Chapters reordered successfully' });

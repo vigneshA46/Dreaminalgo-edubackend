@@ -13,7 +13,7 @@ const router = Router();
 router.post('/login', adminLogin);
 router.post('/refresh', refreshAdminToken);
 router.post('/logout', adminLogout);
-router.post('/me',authenticate , authorize('Super Admin','Course Admin'),getCurrentAdmin);
+router.post('/me',authenticate , authorize('superadmin','Course Admin'),getCurrentAdmin);
 
 export default router;
  

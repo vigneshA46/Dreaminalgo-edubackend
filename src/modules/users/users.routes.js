@@ -25,7 +25,7 @@ res.json(user);
 router.get(
 '/',
 authenticate,
-authorize('Super Admin'),
+authorize('superadmin'),
 async (req, res) => {
   const users = await userService.getAllUsers();
   res.json(users);
@@ -35,7 +35,7 @@ async (req, res) => {
 router.get(
 '/:id',
 authenticate,
-authorize('Super Admin', 'courseadmin'),
+authorize('superadmin', 'courseadmin'),
 async (req, res) => {
   const user = await userService.getUserById(req.params.id);
   res.json(user);
@@ -45,7 +45,7 @@ async (req, res) => {
 router.put(
 '/:id',
 authenticate,
-authorize('Super Admin', 'courseadmin'),
+authorize('superadmin', 'courseadmin'),
 async (req, res) => {
   const user = await userService.updateUser(req.params.id, req.body);
   res.json(user);
@@ -55,7 +55,7 @@ async (req, res) => {
 router.delete(
 '/:id',
 authenticate,
-authorize('Super Admin'),
+authorize('superadmin'),
 async (req, res) => {
   await userService.deleteUser(req.params.id);
   res.json({ message: 'User deactivated' });
