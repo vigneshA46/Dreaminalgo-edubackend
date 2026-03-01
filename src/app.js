@@ -55,7 +55,6 @@ app.use('/api/announcements',announcementRoutes);
 app.use('/api/coupons',couponsRoutes);
 app.use('/api/payments',paymentRoutes);
 app.use('/api/progress',progressRoutes);
- 
 
 /* Health Check */
 app.get('/health', (req, res) => {

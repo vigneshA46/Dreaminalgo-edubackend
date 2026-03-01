@@ -45,13 +45,15 @@ export const adminLoginService = async (email, password, res) => {
   res.cookie('accessToken', accessToken, {
     httpOnly: true,
     secure: true,
-    sameSite: 'strict',
+    sameSite: "none",
+    path: "/"
   });
 
   res.cookie('refreshToken', refreshToken, {
     httpOnly: true,
     secure: true,
-    sameSite: 'strict',
+    sameSite: "none",
+    path: "/"
   });
 
   return {

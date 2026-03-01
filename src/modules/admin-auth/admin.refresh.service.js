@@ -64,14 +64,16 @@ const newAccessToken = jwt.sign(
 
   res.cookie('accessToken', newAccessToken, {
     httpOnly: true,
-     secure: true,
-    sameSite: 'strict',
+    secure: true,
+    sameSite: "none",
+    path: "/"
   });
 
   res.cookie('refreshToken', newRefreshToken, {
     httpOnly: true,
-     secure: true,
-    sameSite: 'strict',
+    secure: true,
+    sameSite: "none",
+    path: "/"
   });
 
   return {

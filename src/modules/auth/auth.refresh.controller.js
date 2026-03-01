@@ -8,13 +8,15 @@ export const refreshToken = async (req, res) => {
   res.cookie("refreshToken", refreshToken, {
     httpOnly: true,
     secure: true,
-    sameSite: "lax",
+    sameSite: "none",
+    path: "/"
   });
 
   res.cookie("accessToken",accessToken,{
      httpOnly: true,
     secure: true,
-    sameSite: "lax",
+    sameSite: "none",
+    path: "/"
   })
 
   console.log("🍪 Cookies:", req.cookies);

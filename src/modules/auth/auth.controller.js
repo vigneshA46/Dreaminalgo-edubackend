@@ -12,13 +12,15 @@ export const login = async (req, res) => {
   res.cookie("refreshToken", refreshToken, {
     httpOnly: true,
     secure: true,
-    sameSite: "strict",
+    sameSite: "none",
+    path: "/"
   });
 
     res.cookie("accessToken", accessToken, {
     httpOnly: true,
     secure: true,
-    sameSite: "strict",
+    sameSite: "none",
+    path: "/"
   });
 
   res.json({ userid });
