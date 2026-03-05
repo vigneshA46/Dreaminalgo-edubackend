@@ -75,27 +75,40 @@ export const initDB = async () => {
       );
     `);
 
-    /* COURSES */
-    await pool.query(`
-      CREATE TABLE IF NOT EXISTS courses (
-        id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-        title VARCHAR(255),
-        shortdescription TEXT,
-        description TEXT,
-        fulldetails TEXT,
-        tutor VARCHAR(255),
-        category VARCHAR(100),
-        price NUMERIC(10,2),
-        isfree BOOLEAN DEFAULT false,
-        status VARCHAR(50),
-        tumbnai TEXT,
-        backgroundimage TEXT,
-        createdby UUID REFERENCES admins(id),
-        createdat TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        updatedat TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-      );
-    `);
 
+  /* COURSES */
+  await pool.query(`
+  CREATE TABLE IF NOT EXISTS courses (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+
+    title VARCHAR(255) NOT NULL,
+    subline VARCHAR(255),
+    author VARCHAR(255),
+
+    aboutheading VARCHAR(255),
+    description TEXT,
+
+    language VARCHAR(100),
+    duration VARCHAR(100), -- e.g. "10 Hours", "6 Weeks"
+    chapters INTEGER, -- number of chapters
+
+    level VARCHAR(50), -- Beginner / Intermediate / Advanced
+    certificate BOOLEAN DEFAULT false,
+
+    learning JSONB, -- list of learning outcomes
+
+    bgimage_url TEXT,
+
+    fee NUMERIC(10,2) DEFAULT 0,
+    isfree BOOLEAN GENERATED ALWAYS AS (fee = 0) STORED,
+
+    status VARCHAR(50) DEFAULT 'draft',
+
+    createdby UUID REFERENCES admins(id),
+    createdat TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updatedat TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  );
+`);
     /* CHAPTER */
     await pool.query(`
       CREATE TABLE IF NOT EXISTS chapter (
@@ -240,6 +253,7 @@ export const initDB = async () => {
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
   );
 `);
+
 
     console.log("✅ Database connected & tables verified");
   } catch (error) {

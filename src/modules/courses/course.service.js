@@ -4,49 +4,58 @@ import pool from '../../config/db.js';
 export const createCourse = async (data, adminId) => {
   const {
     title,
-    shortdescription,
+    subline,
+    author,
+    aboutheading,
     description,
-    fulldetails,
-    tutor,
-    category,
-    price,
-    isfree,
-    status,
-    tumbnai,
-    backgroundimage
+    language,
+    duration,
+    chapters,
+    level,
+    certificate,
+    learning,
+    bgimage_url,
+    fee,
+    status
   } = data;
 
   const { rows } = await pool.query(
     `
     INSERT INTO courses (
       title,
-      shortdescription,
+      subline,
+      author,
+      aboutheading,
       description,
-      fulldetails,
-      tutor,
-      category,
-      price,
-      isfree,
+      language,
+      duration,
+      chapters,
+      level,
+      certificate,
+      learning,
+      bgimage_url,
+      fee,
       status,
-      tumbnai,
-      backgroundimage,
       createdby
     )
-    VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)
+    VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)
     RETURNING *
     `,
     [
       title,
-      shortdescription,
+      subline,
+      author,
+      aboutheading,
       description,
-      fulldetails,
-      tutor,
-      category,
-      price,
-      isfree,
+      language,
+      duration,
+      chapters,
+      level,
+      certificate,
+      learning, // should be array → JSON
+      bgimage_url,
+      fee,
       status,
-      tumbnai,
-      backgroundimage,
       adminId
     ]
   );
@@ -54,21 +63,25 @@ export const createCourse = async (data, adminId) => {
   return rows[0];
 };
 
+
 /* UPDATE COURSE – id in body */
 export const updateCourse = async (data) => {
   const {
     id,
     title,
-    shortdescription,
+    subline,
+    author,
+    aboutheading,
     description,
-    fulldetails,
-    tutor,
-    category,
-    price,
-    isfree,
-    status,
-    tumbnai,
-    backgroundimage
+    language,
+    duration,
+    chapters,
+    level,
+    certificate,
+    learning,
+    bgimage_url,
+    fee,
+    status
   } = data;
 
   const { rows } = await pool.query(
@@ -76,38 +89,45 @@ export const updateCourse = async (data) => {
     UPDATE courses
     SET
       title = COALESCE($1, title),
-      shortdescription = COALESCE($2, shortdescription),
-      description = COALESCE($3, description),
-      fulldetails = COALESCE($4, fulldetails),
-      tutor = COALESCE($5, tutor),
-      category = COALESCE($6, category),
-      price = COALESCE($7, price),
-      isfree = COALESCE($8, isfree),
-      status = COALESCE($9, status),
-      tumbnai = COALESCE($10, tumbnai),
-      backgroundimage = COALESCE($11, backgroundimage),
+      subline = COALESCE($2, subline),
+      author = COALESCE($3, author),
+      aboutheading = COALESCE($4, aboutheading),
+      description = COALESCE($5, description),
+      language = COALESCE($6, language),
+      duration = COALESCE($7, duration),
+      chapters = COALESCE($8, chapters),
+      level = COALESCE($9, level),
+      certificate = COALESCE($10, certificate),
+      learning = COALESCE($11, learning),
+      bgimage_url = COALESCE($12, bgimage_url),
+      fee = COALESCE($13, fee),
+      status = COALESCE($14, status),
       updatedat = NOW()
-    WHERE id = $12
+    WHERE id = $15
     RETURNING *
     `,
     [
       title,
-      shortdescription,
+      subline,
+      author,
+      aboutheading,
       description,
-      fulldetails,
-      tutor,
-      category,
-      price,
-      isfree,
+      language,
+      duration,
+      chapters,
+      level,
+      certificate,
+      learning,
+      bgimage_url,
+      fee,
       status,
-      tumbnai,
-      backgroundimage,
       id
     ]
   );
 
   return rows[0];
 };
+
 
 /* DELETE COURSE */
 export const deleteCourse = async (id) => {
@@ -117,25 +137,12 @@ export const deleteCourse = async (id) => {
   );
 };
 
+
 /* GET SINGLE COURSE */
 export const getCourseById = async (id) => {
   const { rows } = await pool.query(
     `
-    SELECT
-      id,
-      title,
-      shortdescription,
-      description,
-      fulldetails,
-      tutor,
-      category,
-      price,
-      isfree,
-      status,
-      tumbnai,
-      backgroundimage,
-      createdat,
-      updatedat
+    SELECT *
     FROM courses
     WHERE id = $1
     `,
@@ -145,7 +152,6 @@ export const getCourseById = async (id) => {
   return rows[0];
 };
 
-
 /* GET ALL COURSES */
 export const getAllCourses = async () => {
   const { rows } = await pool.query(
@@ -153,9 +159,10 @@ export const getAllCourses = async () => {
     SELECT
       id,
       title,
-      category,
-      tutor,
-      price,
+      subline,
+      author,
+      level,
+      fee,
       isfree,
       status,
       createdat
@@ -167,21 +174,12 @@ export const getAllCourses = async () => {
   return rows;
 };
 
+
 /* GET COURSES BY STATUS */
 export const getCoursesByStatus = async (status) => {
   const { rows } = await pool.query(
     `
-    SELECT
-      id,
-      title,
-      shortdescription,
-      tutor,
-      category,
-      price,
-      isfree,
-      status,
-      tumbnai,
-      createdat
+    SELECT *
     FROM courses
     WHERE status = $1
     ORDER BY createdat DESC
@@ -191,7 +189,6 @@ export const getCoursesByStatus = async (status) => {
 
   return rows;
 };
-
 
 /* GET COURSES BY CATEGORY */
 export const getCoursesByCategory = async (category) => {
