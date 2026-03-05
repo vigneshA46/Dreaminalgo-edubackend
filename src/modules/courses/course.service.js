@@ -52,7 +52,7 @@ export const createCourse = async (data, adminId) => {
       chapters,
       level,
       certificate,
-      learning, // should be array → JSON
+      JSON.stringify(learning), // should be array → JSON
       bgimage_url,
       fee,
       status,
@@ -117,7 +117,7 @@ export const updateCourse = async (data) => {
       chapters,
       level,
       certificate,
-      learning,
+      JSON.stringify(learning),
       bgimage_url,
       fee,
       status,
