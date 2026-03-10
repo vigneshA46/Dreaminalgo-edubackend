@@ -72,7 +72,7 @@ router.post(
   }
 );
 
-router.get(
+router.post(
   '/:category',
   authenticate,
   async (req, res) => {
@@ -82,12 +82,12 @@ router.get(
   }
 );
 
-router.get(
+router.post(
   '/:category/:status',
   authenticate,
   async (req, res) => {
     const {category , status} = req.params;
-    const course = await courseService.getCoursesByCategory(category , status);
+    const course = await courseService.getCoursesByCategoryandStatus(category , status);
     res.json(course);
   }
 );

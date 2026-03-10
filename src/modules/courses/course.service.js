@@ -157,15 +157,7 @@ export const getAllCourses = async () => {
   const { rows } = await pool.query(
     `
     SELECT
-      id,
-      title,
-      subline,
-      author,
-      level,
-      fee,
-      isfree,
-      status,
-      createdat
+      *
     FROM courses
     ORDER BY createdat DESC
     `
@@ -177,14 +169,16 @@ export const getAllCourses = async () => {
 
 /* GET COURSES BY STATUS */
 export const getCoursesByStatus = async (status) => {
+  const statusLower = status.toLowerCase();
+
   const { rows } = await pool.query(
     `
     SELECT *
     FROM courses
-    WHERE status = $1
+    WHERE LOWER(status) = $1
     ORDER BY createdat DESC
     `,
-    [status]
+    [statusLower]
   );
 
   return rows;
@@ -192,50 +186,34 @@ export const getCoursesByStatus = async (status) => {
 
 /* GET COURSES BY CATEGORY */
 export const getCoursesByCategory = async (category) => {
+  const categoryLower = category.toLowerCase();
+
   const { rows } = await pool.query(
     `
-    SELECT
-      id,
-      title,
-      shortdescription,
-      tutor,
-      category,
-      price,
-      isfree,
-      status,
-      tumbnai,
-      createdat
+    SELECT *
     FROM courses
-    WHERE category = $1
+    WHERE LOWER(category) = $1
     ORDER BY createdat DESC
     `,
-    [category]
+    [categoryLower]
   );
 
   return rows;
 };
 
+export const getCoursesByCategoryandStatus = async (category, status) => {
+  const categoryLower = category.toLowerCase();
+  const statusLower = status.toLowerCase();
 
-export const getCoursesByCategoryandStatus = async (category , status) => {
   const { rows } = await pool.query(
     `
-    SELECT
-      id,
-      title,
-      shortdescription,
-      tutor,
-      category,
-      price,
-      isfree,
-      status,
-      tumbnai,
-      createdat
+    SELECT *
     FROM courses
-    WHERE category = $1
-    AND status = $2
+    WHERE LOWER(category) = $1
+    AND LOWER(status) = $2
     ORDER BY createdat DESC
     `,
-    [category,status]
+    [categoryLower, statusLower]
   );
 
   return rows;
